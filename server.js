@@ -28,7 +28,7 @@ Example style:
 Please write a new recipe blog post now.
 `;
 
-  const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + GEMINI_API_KEY;
+  const url = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + GEMINI_API_KEY;
 
   const requestBody = {
     contents: [{ parts: [{ text: prompt }] }]
@@ -42,12 +42,9 @@ Please write a new recipe blog post now.
 app.get("/generate-recipe-blog", async (req, res) => {
   try {
     const blog_content = await generateRecipeBlogPost();
-
-    // Optional: Forward this to your blog endpoint
     const result = await axios.post("https://blog-agent-backend-ja2b.onrender.com/api/post/blog", {
       blog_content,
     });
-
     console.log("✅ Blog posted:", result.data);
     res.send("✅ Recipe blog posted: " + JSON.stringify(result.data));
   } catch (err) {
@@ -56,7 +53,7 @@ app.get("/generate-recipe-blog", async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT=3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
