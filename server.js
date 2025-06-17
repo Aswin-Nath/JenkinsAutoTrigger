@@ -8,24 +8,46 @@ const GEMINI_API_KEY = "AIzaSyA5BzeEgIuzEGQO76Tl8VGbzvqDbSVluXA";
 
 const generateRecipeBlogPost = async () => {
   const prompt = `
-You are a professional culinary blogger. Write a detailed and engaging blog post about a unique recipe. The blog should include:
+You are a professional culinary blogger. You are REQUIRED to write a complete and engaging blog post about a unique and delicious recipe.
 
-1. **Title**: Catchy and relevant to the recipe.
-2. **Introduction**: A short backstory or context of the recipe (e.g., cultural origin, inspiration).
-3. **Ingredients**: A neatly formatted list.
-4. **Preparation Steps**: Clear step-by-step instructions.
-5. **Cooking Tips**: Optional tips or substitutions.
-6. **Nutritional Info**: A rough estimate of calories and key nutrients.
-7. **Conclusion**: Encouraging and share-worthy closing.
+⚠️ STRICT INSTRUCTIONS:
+- DO NOT OMIT any of the following sections.
+- The blog MUST follow the exact format and order given below.
+- Each section should be clearly labeled with bold headers like **Title**, **Introduction**, etc.
+- If any section is missing or improperly formatted, the blog will be rejected.
 
-The tone should be friendly and professional, ideal for food lovers and home cooks. Format it for easy readability.
-
-Example style:
+🎯 BLOG FORMAT TEMPLATE:
 ---
-**Title**: Grandma’s Secret Butter Chicken  
-**Introduction**: This rich and creamy North Indian classic was a weekend favorite at my grandmother’s house...
----
-Please write a new recipe blog post now.
+**Title**: [Write a catchy and relevant title]
+
+**Introduction**: [Short context or backstory: e.g., cultural origin, seasonal inspiration]
+
+**Ingredients**:
+* [Item 1]
+* [Item 2]
+* [Item 3]
+(Use clear and consistent bullet points)
+
+**Preparation Steps**:
+1. [Step 1]
+2. [Step 2]
+3. [Step 3]
+(Numbered steps must be clear and specific)
+
+**Cooking Tips**:
+* [Optional cooking tips or substitutions]
+
+**Nutritional Info**:
+* Calories: ~XXX
+* Protein: ~XXg
+* Carbohydrates: ~XXg
+* Fat: ~XXg
+(Make it approximate but realistic per serving)
+
+**Conclusion**:
+[Encouraging wrap-up. Make it feel personal and engaging.]
+
+Now, write a completely new recipe blog post that strictly follows this structure.
 `;
 
   const url = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=" + GEMINI_API_KEY;
@@ -38,6 +60,7 @@ Please write a new recipe blog post now.
   const blogPost = response.data.candidates[0].content.parts[0].text;
   return blogPost;
 };
+
 
 app.get("/generate-recipe-blog", async (req, res) => {
   try {
