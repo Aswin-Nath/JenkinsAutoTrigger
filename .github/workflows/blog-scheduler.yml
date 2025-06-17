@@ -2,8 +2,8 @@ name: Scheduled Blog Uploader
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # ⏱️ Every minute
-  workflow_dispatch:     # Optional: manual trigger
+    - cron: '*/1 * * * *'  # Every minute
+  workflow_dispatch:       # Optional: manual trigger
 
 jobs:
   post-blog:
@@ -20,8 +20,10 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+        working-directory: automation
 
       - name: Run blog post script
         run: node post_blog.js
+        working-directory: automation
         env:
           BLOG_CONTENT: ${{ secrets.BLOG_CONTENT }}
