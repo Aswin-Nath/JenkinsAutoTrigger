@@ -1,0 +1,27 @@
+name: Scheduled Blog Uploader
+
+on:
+  schedule:
+    - cron: '*/1 * * * *'  # ⏱️ Every minute
+  workflow_dispatch:     # Optional: manual trigger
+
+jobs:
+  post-blog:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run blog post script
+        run: node post_blog.js
+        env:
+          BLOG_CONTENT: ${{ secrets.BLOG_CONTENT }}
